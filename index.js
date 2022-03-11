@@ -1,22 +1,22 @@
-const http = require("http"),
-axios = require("axios");
+const   http = require("http"),
+        logger = require("morgan"),
+        express = require("express"),
+        bodyParser = require("body-parser");
 
-http.createServer((req, res)=>{
-    res.write(users.join(", "));
-    res.write("\n\n"+email.join(", "));
-    res.end()
-}).listen(8000);
+let app = express();
+let port = 8000;
 
-let users = [];
-let email = [];
+app.use(bodyParser.json());
+app.use(logger("tiny"));
 
-(async function getNames(){
-    try{
-        const {data} = await axios.get("https://jsonplaceholder.typicode.com/users");
-        users = data.map(user=>user.name)
-        email = data.map(email=>email.email)
+app.get("/:foo/:bar", (req, res)=>{
+    res.json({message: "Hello World!",
+                data: [
+                    req.params.foo,
+                    req.params.bar
+                ]});
+})
 
-    } catch(error){
-        console.log(error)
-    }
-})()
+app.listen(port, function(err){
+    console.log("Listening on port: " + port)
+});
