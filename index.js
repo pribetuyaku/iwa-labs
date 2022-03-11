@@ -11,10 +11,10 @@ app.use(logger("tiny"));
 
 app.get("/:foo/:bar", (req, res)=>{
     res.json({message: "Hello World!",
-                data: [
-                    req.params.foo,
-                    req.params.bar
-                ]});
+    	      data: [
+                req.params.foo,
+                req.params.bar
+              ]});
 })
 
 app.listen(port, function(err){
